@@ -38,6 +38,6 @@ class character(sprite.Sprite):
         self.hp += 20
 
     def draw(self, pos_center):
-        img = pygame.transform.rotate(self.img, self.angle)
+        img = pygame.transform.rotate(self.img, self.angle + 90)
         img_size = Vector2(img.get_size())
         screen.blit(img, self.pos_center - img_size / 2 - pos_center + center)

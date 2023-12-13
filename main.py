@@ -86,6 +86,7 @@ def main(*_):
     client_socket.send_message_to_server(f'{player_number}gun knockback 3')
     client_socket.send_message_to_server(f'{player_number}gun one_shot 10')
     client_socket.send_message_to_server(f'{player_number}gun accuracy_range pi/5')
+    #client_socket.send_message_to_server(f'{player_number}gun atk 0')
 
     move = [0, 0, 0, 0]
     while True:

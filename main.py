@@ -7,6 +7,8 @@ from pygame.math import Vector2
 from graphic_manager import timing_manager
 from math import pi
 
+pygame.init()
+
 player_amount = 2
 player_number = 1
 
@@ -60,10 +62,10 @@ def main(*_):
     client_socket.send_message_to_server(f'ready {player_number}')
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_socket.bind(('localhost', myport))
-    draw_text('waiting for other players...', size=100)
+    draw_text('waiting for other players...')
+    pygame.display.update()
     while True:
-        for event in pygame.event.get():
-            pass
+        pygame.event.get()
         clock.tick(FPS)
         data, addr = server_socket.recvfrom(bufferSize)
         message = data.decode()
@@ -141,6 +143,5 @@ func = main
 
 params = ()
 while __name__ == "__main__":
-    print('asdf')
     result = func(*params)
     func, params = result

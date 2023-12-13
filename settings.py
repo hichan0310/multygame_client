@@ -13,6 +13,9 @@ PLAYER_MASS = 12
 PLAYER_START_POS = (0, 200)
 
 PLAYER_R = 25
+rate=17.15/12.5
+
+
 ARROW_R = 10
 arrow_img=pygame.transform.scale(pygame.image.load('arrow.png'), (ARROW_R*2, ARROW_R*2))
 
@@ -22,7 +25,7 @@ screen = pygame.display.set_mode(SCREEN_SIZE)  # , pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 
 def draw_text(text, *, center=None, size=None, color=None):
-    font = pygame.font.Font("./Maplestory Bold.ttf", size or 24)
+    font = pygame.font.Font("MaplestoryBold.ttf", size or 24)
     text = font.render(text, True, color or (255, 255, 255))
     if center is None:
         text_rect = text.get_rect()

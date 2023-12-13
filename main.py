@@ -34,8 +34,10 @@ class Client:
 
 client_socket = Client()
 
-end=True
-win=None
+end = True
+win = None
+
+
 def listen():
     global end, win
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -57,8 +59,8 @@ def listen():
             char = eval(message[1])
             setattr(char.gun, message[2], eval(message[3]))
         elif message[0] == 'end':
-            win=message[1]
-            end=True
+            win = message[1]
+            end = True
             return
 
 
@@ -68,15 +70,17 @@ def main(*_):
     client_socket.send_message_to_server(f'ready {player_number}')
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_socket.bind(('localhost', myport))
-    draw_text('waiting for other players...')
-    pygame.display.update()
+    i = 1
     while True:
+        draw_text('waiting for other players' + '.' * i + ' ' * (3 - i))
+        pygame.display.update()
         pygame.event.get()
         clock.tick(FPS)
         data, addr = server_socket.recvfrom(bufferSize)
         message = data.decode()
         if message == 'start':
             break
+        i = i % 3 + 1
     server_socket.close()
 
     threading.Thread(target=listen).start()
@@ -86,7 +90,7 @@ def main(*_):
     client_socket.send_message_to_server(f'{player_number}gun knockback 3')
     client_socket.send_message_to_server(f'{player_number}gun one_shot 10')
     client_socket.send_message_to_server(f'{player_number}gun accuracy_range pi/5')
-    #client_socket.send_message_to_server(f'{player_number}gun atk 0')
+    # client_socket.send_message_to_server(f'{player_number}gun atk 0')
 
     move = [0, 0, 0, 0]
     while True:
@@ -164,6 +168,6 @@ func = main
 
 params = ()
 while __name__ == "__main__":
-    end=False
+    end = False
     result = func(*params)
     func, params = result

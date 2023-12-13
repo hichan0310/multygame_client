@@ -8,7 +8,7 @@ center = Vector2((SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
 class Sprite:
     def __init__(self, pos_center: Vector2, image: pygame.Surface, sp_manager):
         self.pos_center = pos_center
-        self.img_size=Vector2(image.get_size())
+        self.img_size = Vector2(image.get_size())
         self.img = image
         self.sp_manager: sprite_manager = sp_manager
         self.sp_manager.add_sprite(self)
@@ -29,7 +29,7 @@ class sprite_manager:
 
     def draw(self, screen: pygame.Surface, pos_center: Vector2):
         for sp in self.sprites:
-            screen.blit(sp.img, sp.pos_center-sp.img_size/2 - pos_center + center)
+            screen.blit(sp.img, sp.pos_center - sp.img_size / 2 - pos_center + center)
 
     def remove_sprite(self, sp):
         try:

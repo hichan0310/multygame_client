@@ -7,9 +7,8 @@ from pygame.math import Vector2
 from graphic_manager import timing_manager
 from math import pi
 
-player_amount=2
-player_number=1
-
+player_amount = 2
+player_number = 1
 
 screen.fill('#000000')
 
@@ -18,12 +17,9 @@ background = Sprite(Vector2(0, 0), pygame.image.load('background.png'), backgrou
 p1 = character(Vector2(200, 0))
 p2 = character(Vector2(-200, 0))
 mychar = eval(f'p{player_number}')
-notmychar = [eval(f'p{i}') for i in range(1, player_amount+1) if i!=player_number]
-myport = 10000+player_number
+notmychar = [eval(f'p{i}') for i in range(1, player_amount + 1) if i != player_number]
+myport = 10000 + player_number
 serverport = 10000
-
-
-
 
 
 class Client:
@@ -64,7 +60,7 @@ server_socket.bind(('localhost', myport))
 while True:
     data, addr = server_socket.recvfrom(bufferSize)
     message = data.decode()
-    if message=='start':
+    if message == 'start':
         break
 server_socket.close()
 
@@ -128,9 +124,24 @@ def main(*_):
         pygame.display.update()
 
 
-func = main
+def start(*_):
+    print('asdf')
+    while True:
+        background_manager.draw(screen, center)
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    print('start')
+                    return main, _
+
+        clock.tick(FPS)
+        pygame.display.update()
+
+
+func = start
 
 params = ()
 while __name__ == "__main__":
+    print('asdf')
     result = func(*params)
     func, params = result

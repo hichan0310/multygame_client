@@ -15,6 +15,14 @@ class character(sprite.Sprite):
         self.gun = gun()
         self.angle = 0
 
+    def set(self):
+        self.hp = 100
+        self.movement_real = Vector2((0, 0))
+        self.mass = PLAYER_MASS
+        self.speed = PLAYER_SPEED
+        self.gun = gun()
+        self.angle = 0
+
     def hit(self, dmg):
         self.hp -= dmg
 

@@ -16,7 +16,12 @@ screen.fill('#000000')
 
 background = Sprite(Vector2(0, 0), pygame.image.load('background.png'), background_manager)
 
-player_param=[(Vector2(200, 0), 1), (Vector2(-200, 0), 2)]
+player_param = [(Vector2(200, 0), 1), (Vector2(-200, 0), 2)]
+
+p1 = character(*player_param[0])
+p2 = character(*player_param[1])
+mychar: character = eval(f'p{player_number}')
+notmychar = [eval(f'p{ii}') for ii in range(1, player_amount + 1) if ii != player_number]
 
 # p1 = character(*player_param[0])
 # p2 = character(*player_param[1])
@@ -67,6 +72,7 @@ def listen():
 
 
 def main(*_):
+    # global p1, p2, mychar, notmychar
     screen.fill('#000000')
     # game set
     client_socket.send_message_to_server(f'ready {player_number}')
@@ -86,10 +92,13 @@ def main(*_):
     server_socket.close()
 
     threading.Thread(target=listen).start()
-    p1 = character(*player_param[0])
-    p2 = character(*player_param[1])
-    mychar: character = eval(f'p{player_number}')
-    notmychar = [eval(f'p{i}') for i in range(1, player_amount + 1) if i != player_number]
+    p1.set()
+    p2.set()
+
+    # p1 = character(*player_param[0])
+    # p2 = character(*player_param[1])
+    # mychar: character = eval(f'p{player_number}')
+    # notmychar = [eval(f'p{ii}') for ii in range(1, player_amount + 1) if ii != player_number]
 
     # gun set
     client_socket.send_message_to_server(f'{player_number}gun homing True')

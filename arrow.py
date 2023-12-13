@@ -14,7 +14,7 @@ class arrow(sprite.Sprite):
                  homing: bool = False,
                  knockback: int = 0):
         super(arrow, self).__init__(pos_center=position,
-                                    image=pygame.image.load('arrow.png'),
+                                    image=arrow_img,
                                     sp_manager=sprite.bullet_manager)
         self.speed = speed
         self.direction = direction

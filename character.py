@@ -5,7 +5,7 @@ from gun import gun
 
 class character(sprite.Sprite):
     def __init__(self, position, player_num):
-        super(character, self).__init__(position, pygame.image.load(f'player{player_num}.png'),
+        super(character, self).__init__(position, pygame.transform.scale(pygame.image.load(f'player{player_num}.png'), (PLAYER_R*2, PLAYER_R*2)),
                                         sprite.player_manager)
         self.hp = 100
         self.movement_real = Vector2((0, 0))

@@ -14,6 +14,8 @@ PLAYER_START_POS = (0, 200)
 
 PLAYER_R = 25
 ARROW_R = 10
+arrow_img=pygame.transform.scale(pygame.image.load('arrow.png'), (ARROW_R*2, ARROW_R*2))
+
 
 bufferSize = 1024
 screen = pygame.display.set_mode(SCREEN_SIZE)  # , pygame.FULLSCREEN)

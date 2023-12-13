@@ -62,7 +62,6 @@ def listen():
 
 
 def main(*_):
-    end=False
     screen.fill('#000000')
     # game set
     client_socket.send_message_to_server(f'ready {player_number}')
@@ -137,7 +136,7 @@ def main(*_):
         clock.tick(FPS)
 
         pygame.display.update()
-        screen.fill('#000000')
+    screen.fill('#000000')
     draw_text(f'{win} win')
     pygame.display.update()
     while True:
@@ -164,5 +163,6 @@ func = main
 
 params = ()
 while __name__ == "__main__":
+    end=False
     result = func(*params)
     func, params = result

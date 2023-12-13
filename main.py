@@ -54,32 +54,25 @@ def listen():
             setattr(char.gun, message[2], eval(message[3]))
 
 
-client_socket.send_message_to_server(f'ready {player_number}')
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-server_socket.bind(('localhost', myport))
-while True:
-    data, addr = server_socket.recvfrom(bufferSize)
-    message = data.decode()
-    if message == 'start':
-        break
-server_socket.close()
-
-threading.Thread(target=listen).start()
-
-client_socket.send_message_to_server(f'{player_number}gun homing True')
-client_socket.send_message_to_server(f'{player_number}gun knockback 3')
-client_socket.send_message_to_server(f'{player_number}gun one_shot 10')
-client_socket.send_message_to_server(f'{player_number}gun accuracy_range pi/5')
-
-
-# mychar.gun.homing=True
-# mychar.gun.knockback=3
-# mychar.gun.one_shot=10
-# mychar.gun.accuracy_range=pi/5
-
-
 def main(*_):
     # game set
+    client_socket.send_message_to_server(f'ready {player_number}')
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server_socket.bind(('localhost', myport))
+    while True:
+        data, addr = server_socket.recvfrom(bufferSize)
+        message = data.decode()
+        if message == 'start':
+            break
+    server_socket.close()
+
+    threading.Thread(target=listen).start()
+
+    # gun set
+    client_socket.send_message_to_server(f'{player_number}gun homing True')
+    client_socket.send_message_to_server(f'{player_number}gun knockback 3')
+    client_socket.send_message_to_server(f'{player_number}gun one_shot 10')
+    client_socket.send_message_to_server(f'{player_number}gun accuracy_range pi/5')
 
     move = [0, 0, 0, 0]
     while True:
@@ -118,7 +111,8 @@ def main(*_):
         mychar.move(movement)
         for p in notmychar:
             p.move(Vector2(0, 0))
-        client_socket.send_message_to_server(f'{player_number}status {mychar.pos_center.x} {mychar.pos_center.y} {mychar.hp}')
+        client_socket.send_message_to_server(
+            f'{player_number}status {mychar.pos_center.x} {mychar.pos_center.y} {mychar.hp}')
         clock.tick(FPS)
 
         pygame.display.update()

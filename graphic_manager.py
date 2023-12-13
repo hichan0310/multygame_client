@@ -33,4 +33,4 @@ class Function_TimingManager:
         self.__function_params: list[list[tuple[Any]]] = []
 
 
-timing_manager=Function_TimingManager()
+timing_manager = Function_TimingManager()

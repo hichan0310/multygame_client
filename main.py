@@ -59,6 +59,7 @@ def listen():
         elif message[0] == 'end':
             win=message[1]
             end=True
+            return
 
 
 def main(*_):
@@ -137,7 +138,7 @@ def main(*_):
 
         pygame.display.update()
     screen.fill('#000000')
-    draw_text(f'{win} win')
+    draw_text('lose' if win == f'p{player_number}' else 'win')
     pygame.display.update()
     while True:
         for event in pygame.event.get():

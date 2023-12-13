@@ -18,7 +18,7 @@ background = Sprite(Vector2(0, 0), pygame.image.load('background.png'), backgrou
 
 p1 = character(Vector2(200, 0), player_num=1)
 p2 = character(Vector2(-200, 0), player_num=2)
-mychar = eval(f'p{player_number}')
+mychar: character = eval(f'p{player_number}')
 notmychar = [eval(f'p{i}') for i in range(1, player_amount + 1) if i != player_number]
 myport = 10000 + player_number
 serverport = 10000
@@ -121,6 +121,11 @@ def main(*_):
                 #             caster=p1.pos_center)
                 shot_pos = Vector2(event.pos) - center + mychar.pos_center
                 client_socket.send_message_to_server(f'{player_number}shot {shot_pos.x} {shot_pos.y}')
+
+        direction = pygame.mouse.get_pos() - center
+        radius, angle = direction.as_polar()
+        mychar.angle = 180 - angle
+
         movement = Vector2((move[2] - move[3], move[1] - move[0]))
         if not (movement.x == 0 and movement.y == 0):
             movement = movement / movement.length()

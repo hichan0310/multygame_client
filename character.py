@@ -13,6 +13,7 @@ class character(sprite.Sprite):
         self.mass = PLAYER_MASS
         self.speed = PLAYER_SPEED
         self.gun = gun()
+        self.angle = 0
 
     def hit(self, dmg):
         self.hp -= dmg
@@ -35,3 +36,8 @@ class character(sprite.Sprite):
 
     def hp_up(self):
         self.hp += 20
+
+    def draw(self, pos_center):
+        img = pygame.transform.rotate(self.img, self.angle)
+        img_size = Vector2(img.get_size())
+        screen.blit(img, self.pos_center - img_size / 2 - pos_center + center)

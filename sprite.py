@@ -19,6 +19,9 @@ class Sprite:
     def kill(self):
         self.sp_manager.remove_sprite(self)
 
+    def draw(self, pos_center):
+        screen.blit(self.img, self.pos_center - self.img_size / 2 - pos_center + center)
+
 
 class sprite_manager:
     def __init__(self):
@@ -29,7 +32,7 @@ class sprite_manager:
 
     def draw(self, screen: pygame.Surface, pos_center: Vector2):
         for sp in self.sprites:
-            screen.blit(sp.img, sp.pos_center - sp.img_size / 2 - pos_center + center)
+            sp.draw(pos_center)
 
     def remove_sprite(self, sp):
         try:

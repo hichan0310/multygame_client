@@ -75,7 +75,7 @@ def main(*_):
         draw_text('waiting for other players' + '.' * i + ' ' * (3 - i))
         pygame.display.update()
         pygame.event.get()
-        clock.tick(FPS)
+        clock.tick(3)
         data, addr = server_socket.recvfrom(bufferSize)
         message = data.decode()
         if message == 'start':

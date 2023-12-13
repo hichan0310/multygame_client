@@ -7,16 +7,23 @@ from pygame.math import Vector2
 from graphic_manager import timing_manager
 from math import pi
 
+player_amount=2
+player_number=1
+
+
 screen.fill('#000000')
 
 background = Sprite(Vector2(0, 0), pygame.image.load('background.png'), background_manager)
 
 p1 = character(Vector2(200, 0))
 p2 = character(Vector2(-200, 0))
-mychar = p1
-notmychar = [p2]
-myport = 10001
+mychar = eval(f'p{player_number}')
+notmychar = [eval(f'p{i}') for i in range(1, player_amount+1) if i!=player_number]
+myport = 10000+player_number
 serverport = 10000
+
+
+
 
 
 class Client:
@@ -51,12 +58,22 @@ def listen():
             setattr(char.gun, message[2], eval(message[3]))
 
 
+client_socket.send_message_to_server(f'ready {player_number}')
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server_socket.bind(('localhost', myport))
+while True:
+    data, addr = server_socket.recvfrom(bufferSize)
+    message = data.decode()
+    if message=='start':
+        break
+server_socket.close()
+
 threading.Thread(target=listen).start()
 
-client_socket.send_message_to_server('1gun homing True')
-client_socket.send_message_to_server('1gun knockback 3')
-client_socket.send_message_to_server('1gun one_shot 10')
-client_socket.send_message_to_server('1gun accuracy_range pi/5')
+client_socket.send_message_to_server(f'{player_number}gun homing True')
+client_socket.send_message_to_server(f'{player_number}gun knockback 3')
+client_socket.send_message_to_server(f'{player_number}gun one_shot 10')
+client_socket.send_message_to_server(f'{player_number}gun accuracy_range pi/5')
 
 # mychar.gun.homing=True
 # mychar.gun.knockback=3
@@ -101,14 +118,14 @@ def main(*_):
                 # p1.gun.shot(target=Vector2(event.pos)-center+p1.pos_center,
                 #             caster=p1.pos_center)
                 shot_pos = Vector2(event.pos) - center + mychar.pos_center
-                client_socket.send_message_to_server(f'1shot {shot_pos.x} {shot_pos.y}')
+                client_socket.send_message_to_server(f'{player_number}shot {shot_pos.x} {shot_pos.y}')
         movement = Vector2((move[2] - move[3], move[1] - move[0]))
         if not (movement.x == 0 and movement.y == 0):
             movement = movement / movement.length()
         mychar.move(movement)
         for p in notmychar:
             p.move(Vector2(0, 0))
-        client_socket.send_message_to_server(f'1status {mychar.pos_center.x} {mychar.pos_center.y} {mychar.hp}')
+        client_socket.send_message_to_server(f'{player_number}status {mychar.pos_center.x} {mychar.pos_center.y} {mychar.hp}')
         clock.tick(FPS)
 
         pygame.display.update()

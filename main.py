@@ -14,8 +14,8 @@ screen.fill('#000000')
 
 background = Sprite(Vector2(0, 0), pygame.image.load('background.png'), background_manager)
 
-p1 = character(Vector2(200, 0))
-p2 = character(Vector2(-200, 0))
+p1 = character(Vector2(200, 0), player_num=1)
+p2 = character(Vector2(-200, 0), player_num=2)
 mychar = eval(f'p{player_number}')
 notmychar = [eval(f'p{i}') for i in range(1, player_amount + 1) if i != player_number]
 myport = 10000 + player_number
@@ -55,11 +55,16 @@ def listen():
 
 
 def main(*_):
+    screen.fill('#000000')
     # game set
     client_socket.send_message_to_server(f'ready {player_number}')
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_socket.bind(('localhost', myport))
+    draw_text('waiting for other players...', size=100)
     while True:
+        for event in pygame.event.get():
+            pass
+        clock.tick(FPS)
         data, addr = server_socket.recvfrom(bufferSize)
         message = data.decode()
         if message == 'start':
@@ -132,7 +137,7 @@ def start(*_):
         pygame.display.update()
 
 
-func = start
+func = main
 
 params = ()
 while __name__ == "__main__":

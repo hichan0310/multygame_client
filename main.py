@@ -54,7 +54,7 @@ def listen():
             char.gun.shot(target=Vector2(float(message[2]), float(message[3])),
                           caster=char.pos_center)
         elif message[0] == 'gun':
-            char=eval(message[1])
+            char = eval(message[1])
             setattr(char.gun, message[2], eval(message[3]))
 
 
@@ -75,6 +75,7 @@ client_socket.send_message_to_server(f'{player_number}gun knockback 3')
 client_socket.send_message_to_server(f'{player_number}gun one_shot 10')
 client_socket.send_message_to_server(f'{player_number}gun accuracy_range pi/5')
 
+
 # mychar.gun.homing=True
 # mychar.gun.knockback=3
 # mychar.gun.one_shot=10
@@ -83,10 +84,6 @@ client_socket.send_message_to_server(f'{player_number}gun accuracy_range pi/5')
 
 def main(*_):
     # game set
-
-
-
-
 
     move = [0, 0, 0, 0]
     while True:
@@ -129,8 +126,6 @@ def main(*_):
         clock.tick(FPS)
 
         pygame.display.update()
-
-
 
 
 func = main

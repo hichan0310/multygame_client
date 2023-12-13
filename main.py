@@ -34,8 +34,10 @@ class Client:
 
 client_socket = Client()
 
-
+end=True
+win=None
 def listen():
+    global end, win
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_socket.bind(('localhost', myport))
 
@@ -54,9 +56,13 @@ def listen():
         elif message[0] == 'gun':
             char = eval(message[1])
             setattr(char.gun, message[2], eval(message[3]))
+        elif message[0] == 'end':
+            win=message[1]
+            end=True
 
 
 def main(*_):
+    end=False
     screen.fill('#000000')
     # game set
     client_socket.send_message_to_server(f'ready {player_number}')
@@ -88,6 +94,8 @@ def main(*_):
         bullet_manager.draw(screen, mychar.pos_center)
         timing_manager.execute()
         bullet_manager.go()
+        if end:
+            break
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP or event.key == pygame.K_w:
@@ -123,6 +131,13 @@ def main(*_):
         clock.tick(FPS)
 
         pygame.display.update()
+        screen.fill('#000000')
+    draw_text(f'{win} win')
+    pygame.display.update()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                return main, _
 
 
 def start(*_):
